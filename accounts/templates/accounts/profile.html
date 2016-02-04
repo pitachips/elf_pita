@@ -1,0 +1,35 @@
+{% extends 'legolas/base.html' %}
+
+
+{% block main %}
+{% if user.is_authenticated %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3 text-center" style="background-color:#ffd888">
+                <h1>{{ user }}님의 개인정보 페이지 </h1>
+                <table class="table table-bordered table-hover">
+                    <tr>
+                        <td colspan="2"><img src="{{ user.userprofile.photo.url }}" /></td>
+                    </tr>
+                    <tr>
+                        <td>유저 아이디</td>
+                        <td>{{ user.username }}</td>
+                    </tr>
+                    <tr>
+                        <td>이메일주소</td>
+                        <td>{{ user.email }}</td>
+                    </tr>
+                    <tr>
+                        <td>가입일자</td>
+                        <td>{{ user.date_joined }}</td>
+                    </tr>
+                </table>
+                <table>
+
+                </table>
+            </div>
+        </div>
+    </div>
+{% endif %}
+{% endblock %}
+

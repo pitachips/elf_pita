@@ -1,0 +1,24 @@
+{% extends 'legolas/base.html' %}
+{% load bootstrap3 %}
+
+
+    {% block main %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-5 col-md-offset-3"  style="background-color:#fefff1">
+            <h3>2단계: 프로필을 작성해주세요~</h3>
+            <form action="" method="post"> {% csrf_token %}
+                {% bootstrap_form form %}
+                {% buttons %}
+                    <button class="btn btn-primary" style="display:inline-block">
+                    {% bootstrap_icon "star" %} Submit
+                    </button>
+                    <a href="/" class="btn btn-default pull-right">나중에</a>
+                {% endbuttons %}
+            </form>
+        </div>
+    </div>
+</div>
+
+    {% endblock %}

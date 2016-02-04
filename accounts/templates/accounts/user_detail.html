@@ -1,0 +1,86 @@
+{% extends 'legolas/base.html' %}
+{% load staticfiles %}
+
+
+{% block head %}
+    <meta name="description" content="korean yelp equivalant, elf" />
+    <meta name="keywords" content="맛집" />
+    <title>elf user page</title>
+    <link rel="stylesheet" href="{% static 'css/user_detail.css' %}" />
+{% endblock %}
+
+
+{% block search %}
+  {% include 'legolas/search_form.html' %}
+{% endblock search %}
+
+
+
+{% block main %}
+
+    <div id="a_user_content" style="margin-top:30px">
+        <div class="container">
+            <div>
+                {% if a_user.photo %}
+                <img style="float:left; margin: 0px 20px 20px 0; max-width:300px; max-height:250px" src="{{ a_user.photo.url }}" />
+                {% else %}
+                <img style="float:left; margin: 0px 20px 20px 0;" src="http://placehold.it/300x250" />
+                {% endif %}
+                {% if a_user == user %}
+                <div style="float:right;">
+                    <a href="{% url 'core_profile' %}" type="button" class="btn btn-default">개인정보 수정</a>
+                </div>
+                {% endif %}
+                <h3>{{ a_user.username }}</h3>
+                <p>자기소개: {{ a_user.userprofile.intro }}</p>
+                <p>팔로잉: {{ a_user.userprofile.n_following }}명</p>
+                <p>팔로워: {{ a_user.userprofile.n_follower }}명</p>
+
+            </div>
+            <div id="review_for_a_a_user" class="rows" style="clear:both;">
+                <hr />
+
+                <div class="col-md-2">
+                    <div class="btn-group-vertical block btn-block" role="group">
+                        <a href="#" type="button" class="btn btn-default btn-block">기본정보</a>
+                        <a href="#" type="button" class="btn btn-default btn-block">팔로잉</a>
+                        <a href="#" type="button" class="btn btn-default btn-block">팔로워</a>
+                        <a href="#" type="button" class="btn btn-default btn-block">사진만 모아보기</a>
+                    </div>
+                </div>
+
+                <div class="col-md-8">
+                    <h2 style="display:inline-block">지금까지 작성한 리뷰목록</h2>
+                    <br />
+
+                    {% for review in users_reviews %}
+                    <div style="background-color:#fefff1">
+
+                    {% if review.store.photo %}
+                    <a href="{% url 'store_detail' pk=review.store.pk %}"><img src="{{ review.store.photo.url }}" /></a>
+                    {% endif %}
+
+                    <p><a href="{% url 'store_detail' pk=review.store.pk %}">{{ review.store.name }}</a></p>
+                    <span>{{ review.user_rating }}</span><span><i>{{ review.created_at }}</i></span>
+                    <p>{{ review.content|linebreaks }}</p>
+
+                    {% if review.photo %}
+                    <img style="max-height:200px;" src="{{ review.photo.url }}" />
+                    {% endif %}
+
+                    {% if review.comment_set.all %}
+                        <p><span class="glyphicon glyphicon-comment"></span><span>Comments</span></p>
+                        {% for comment in review.comment_set.all %}
+                            {{ comment.author }}  {{ comment.content }}
+                        {% endfor %}
+                    {% endif %}
+                    </div>
+                    <br />
+
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,36 @@
+#easy_choice {
+    margin-top: 30px;
+}
+
+#easy_choice .nav-pills>li>a {
+    border-radius:25px 0px 20px 0px;
+}
+
+.nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover {
+    background-color: #FF9E11;
+}
+
+
+#move_location {
+    margin-top: 30px;
+}
+
+#move_location > .container {
+
+    border-radius: 10px;
+    border: 1px solid #355765;
+    vertical-align: center;
+}
+
+#move_location .container > p {
+    margin: 5px;
+}
+
+.content .col-md-7 {
+    border-right: 1px solid #357999;
+}
+
+#more_review {
+    padding:4px 100px;
+}
+

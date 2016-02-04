@@ -1,0 +1,430 @@
+{% extends 'legolas/base.html' %}
+{% load staticfiles %}
+
+
+<!-- 향후 include로 템플릿 재사용할것 -->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+{% block head %}
+    <meta name="description" content="한국판 옐프, 모든것에 대한 리뷰! korean yelp equivalant, ELF" />
+    <meta name="keywords" content="맛집" />
+    <title>elf index page</title>
+    <link rel="stylesheet" href="{% static 'css/index.css' %}" />
+
+<style>
+h3 {
+    color:#F44;
+    font-weight: 900;
+}
+
+</style>
+
+{% endblock %}
+</head>
+
+<body>
+
+
+{% block search %}
+  {% include 'legolas/search_form.html' %}
+{% endblock search %}
+
+
+{% block main %}
+
+<div id="index_wrap">
+
+
+    <div id="easy_choice">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5">
+                    <ul class="nav nav-pills">
+                        <li class="active"><a data-toggle="pill" href="#seoul_map">서울</a></li>
+                        <li><a data-toggle="pill" href="#busan_map">부산</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div id="seoul_map" class="tab-pane fade in active" style="border: 2px solid #FF9E11;">
+                          <img style="width:100%; max-height:300px" src="{% static 'images/index/map-seoul-white.jpg' %}" />
+                        </div>
+                        <div id="busan_map" class="tab-pane fade" style="border: 2px solid #FF9E11;">
+                          <img style="width:100%; max-height:300px;" src="{% static 'images/index/map-busan.jpg' %}" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-7">
+                    <ul class="nav nav-pills">
+                        <li class="active"><a data-toggle="pill" href="#">엘프 추천</a></li>
+                    </ul>
+                    <div class="tab-content" style="width:100%; border: 2px solid #FF9E11;">
+                        <div class="tab-pane fade in active">
+                            <img src="http://goo.gl/lolwFU;" style="width:100%; max-height:300px;"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="move_location">
+        <div class="container text-center">
+            <p> 엘프에 처음이신가요? <a href="{% url 'signup1' %}">무료로 회원가입</a> 해보세요! &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 다른지역보기 &nbsp;&nbsp;&nbsp; <a href="#">인천 | 광주 | 대전 | 대구 | 울산 | 전주 | 강릉 | 수원 | 포항 | 목포 | 제주 | 춘천 | 일산 </a></p>
+        </div>
+    </div>
+
+
+    <div id="index_main_wrap" style="margin-top:30px">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+
+                    <div class="col-md-12">
+                        <h3>베스트 오브 서울</h3>
+                    </div>
+                    <hr />
+
+                    <div class="col-md-4">
+                    	<ul class="nav nav-pills nav-stacked">
+	                        <li class="active"><a data-toggle="tab" href="#food">맛집</a></li>
+	                        <li><a data-toggle="tab" href="#drink">술집</a></li>
+	                        <li><a data-toggle="tab" href="#shopping">쇼핑</a></li>
+	                        <li><a data-toggle="tab" href="#entertain">엔터테인먼트</a></li>
+	                        <li><a data-toggle="tab" href="#culture">문화생활</a></li>
+	                        <li><a data-toggle="tab" href="#beauty">뷰티&네일</a></li>
+                     	</ul>
+                    </div>
+
+                    <div class="col-md-8">
+                        <div class="tab-content">
+
+                            <div id="food" class="tab-pane fade in active">
+                                <div class="list-group" style="clear:both">
+                                    <ul class="media-list">
+                                      {% for food_store in food_stores %}
+                                      <li class="media">
+                                        <div class="media-left">
+                                          <a href="{% url 'store_detail' pk=food_store.pk %}">
+                                            {% if food_store.photo %}
+                                            <img class="media-object" src="{{ food_store.photo.url }}" alt="..." style="width:80px; height:80px;" />
+                                            {% else %}
+                                            <img class="media-object" src="http://placehold.it/80x80" alt="...">
+                                            {% endif %}
+                                          </a>
+                                        </div>
+                                        <div class="media-body">
+                                          <h4 class="media-heading"><a href="{% url 'store_detail' pk=food_store.pk %}">{{ food_store.name }}</a></h4>
+                                          <span>평점: {{ food_store.store_rating|floatformat }}</span> / <span>{{ food_store.n_review }} reviews</span>
+                                          <div>
+                                            <span>{{ food_store.review_set.last.author }}님의 </span><span>리뷰: </span><span>{{ food_store.review_set.last.content|slice:":50" }}</span>
+                                          </div>
+                                        </div>
+                                      </li>
+                                      {% endfor %}
+                                    </ul>
+                                </div>
+                                <div style="float:right">
+                                  <a href="{% url 'store_list' %}?where=서울&what=맛집">전체보기</a>
+                                </div>
+                            </div>
+
+                            <div id="drink" class="tab-pane fade in">
+                                <div class="list-group">
+                                    <ul class="media-list">
+                                      {% for drink_store in drink_stores %}
+                                      <li class="media">
+                                        <div class="media-left">
+                                          <a href="{% url 'store_detail' pk=drink_store.pk %}">
+                                            {% if drink_store.photo %}
+                                            <img class="media-object" src="{{ drink_store.photo.url }}" alt="..." style="width:80px; height:80px;" />
+                                            {% else %}
+                                            <img class="media-object" src="http://placehold.it/80x80" alt="...">
+                                            {% endif %}
+                                          </a>
+                                        </div>
+                                        <div class="media-body">
+                                          <h4 class="media-heading"><a href="{% url 'store_detail' pk=drink_store.pk %}">{{ drink_store.name }}</a></h4>
+                                          <span>평점: {{ drink_store.store_rating|floatformat }}</span> / <span>{{ drink_store.n_review }} reviews</span>
+                                          <div>
+                                            <span>{{ drink_store.review_set.last.author }}님의 </span><span>리뷰: </span><span>{{ drink_store.review_set.last.content|slice:":50" }}</span>
+                                          </div>
+                                        </div>
+                                      </li>
+                                      {% endfor %}
+                                    </ul>
+                                </div>
+                                <div style="float:right">
+                                  <a href="{% url 'store_list' %}?where=서울&what=술집">전체보기</a>
+                                </div>
+                            </div>
+
+                            <div id="shopping" class="tab-pane fade in">
+                                <div class="list-group">
+                                    <ul class="media-list">
+                                      {% for shopping_store in shopping_stores %}
+                                      <li class="media">
+                                        <div class="media-left">
+                                          <a href="{% url 'store_detail' pk=shopping_store.pk %}">
+                                            {% if shopping_store.photo %}
+                                            <img class="media-object" src="{{ shopping_store.photo.url }}" alt="..." style="width:80px; height:80px;" />
+                                            {% else %}
+                                            <img class="media-object" src="http://placehold.it/80x80" alt="...">
+                                            {% endif %}
+                                          </a>
+                                        </div>
+                                        <div class="media-body">
+                                          <h4 class="media-heading"><a href="{% url 'store_detail' pk=shopping_store.pk %}">{{ shopping_store.name }}</a></h4>
+                                          <span>평점: {{ shopping_store.store_rating|floatformat }}</span> / <span>{{ shopping_store.n_review }} reviews</span>
+                                          <div>
+                                            <span>{{ shopping_store.review_set.last.author }}님의 </span><span>리뷰: </span><span>{{ shopping_store.review_set.last.content|slice:":50" }}</span>
+                                          </div>
+                                        </div>
+                                      </li>
+                                      {% endfor %}
+                                    </ul>
+                                </div>
+                                <div style="float:right">
+                                  <a href="{% url 'store_list' %}?where=서울&what=쇼핑">전체보기</a>
+                                </div>
+                            </div>
+
+                            <div id="entertain" class="tab-pane fade in">
+                                <div class="list-group">
+                                    <ul class="media-list">
+                                      {% for entertain_store in entertain_stores %}
+                                      <li class="media">
+                                        <div class="media-left">
+                                          <a href="{% url 'store_detail' pk=entertain_store.pk %}">
+                                            {% if entertain_store.photo %}
+                                            <img class="media-object" src="{{ entertain_store.photo.url }}" alt="..." style="width:80px; height:80px;" />
+                                            {% else %}
+                                            <img class="media-object" src="http://placehold.it/80x80" alt="...">
+                                            {% endif %}
+                                          </a>
+                                        </div>
+                                        <div class="media-body">
+                                          <h4 class="media-heading"><a href="{% url 'store_detail' pk=entertain_store.pk %}">{{ entertain_store.name }}</a></h4>
+                                          <span>평점: {{ entertain_store.store_rating|floatformat }}</span> / <span>{{ entertain_store.n_review }} reviews</span>
+                                          <div>
+                                            <span>{{ entertain_store.review_set.last.author }}님의 </span><span>리뷰: </span><span>{{ entertain_store.review_set.last.content|slice:":50" }}</span>
+                                          </div>
+                                        </div>
+                                      </li>
+                                      {% endfor %}
+                                    </ul>
+                                </div>
+                                <div style="float:right">
+                                  <a href="{% url 'store_list' %}?where=서울&what=엔터테인먼트">전체보기</a>
+                                </div>
+                            </div>
+
+                            <div id="culture" class="tab-pane fade in">
+                                <div class="list-group">
+                                    <ul class="media-list">
+                                      {% for culture_store in culture_stores %}
+                                      <li class="media">
+                                        <div class="media-left">
+                                          <a href="{% url 'store_detail' pk=culture_store.pk %}">
+                                            {% if culture_store.photo %}
+                                            <img class="media-object" src="{{ culture_store.photo.url }}" alt="..." style="width:80px; height:80px;" />
+                                            {% else %}
+                                            <img class="media-object" src="http://placehold.it/80x80" alt="...">
+                                            {% endif %}
+                                          </a>
+                                        </div>
+                                        <div class="media-body">
+                                          <h4 class="media-heading"><a href="{% url 'store_detail' pk=culture_store.pk %}">{{ culture_store.name }}</a></h4>
+                                          <span>평점: {{ culture_store.store_rating|floatformat }}</span> / <span>{{ culture_store.n_review }} reviews</span>
+                                          <div>
+                                            <span>{{ culture_store.review_set.last.author }}님의 </span><span>리뷰: </span><span>{{ culture_store.review_set.last.content|slice:":50" }}</span>
+                                          </div>
+                                        </div>
+                                      </li>
+                                      {% endfor %}
+                                    </ul>
+                                </div>
+                                <div style="float:right">
+                                  <a href="{% url 'store_list' %}?where=서울&what=문화생활">전체보기</a>
+                                </div>
+                            </div>
+
+                            <div id="beauty" class="tab-pane fade in">
+                                <div class="list-group">
+                                    <ul class="media-list">
+                                      {% for beauty_store in beauty_stores %}
+                                      <li class="media">
+                                        <div class="media-left">
+                                          <a href="{% url 'store_detail' pk=beauty_store.pk %}">
+                                            {% if beauty_store.photo %}
+                                            <img class="media-object" src="{{ beauty_store.photo.url }}" alt="..." style="width:80px; height:80px;" />
+                                            {% else %}
+                                            <img class="media-object" src="http://placehold.it/80x80" alt="...">
+                                            {% endif %}
+                                          </a>
+                                        </div>
+                                        <div class="media-body">
+                                          <h4 class="media-heading"><a href="{% url 'store_detail' pk=beauty_store.pk %}">{{ beauty_store.name }}</a></h4>
+                                          <span>평점: {{ beauty_store.store_rating|floatformat }}</span> / <span>{{ beauty_store.n_review }} reviews</span>
+                                          <div>
+                                            <span>{{ beauty_store.review_set.last.author }}님의 </span><span>리뷰: </span><span>{{ beauty_store.review_set.last.content|slice:":50" }}</span>
+                                          </div>
+                                        </div>
+                                      </li>
+                                      {% endfor %}
+                                    </ul>
+                                </div>
+                                <div style="float:right">
+                                  <a href="{% url 'store_list' %}?where=서울&what=뷰티&네일">전체보기</a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <h3>최신 리뷰</h3>
+                        <hr />
+                        <div class="list-group">
+                            <ul class="media-list">
+                              {% for recent_review in recent_reviews %}
+                              <li class="media">
+                                <div class="media-left">
+                                  <a href="{% url 'user_detail' pk=recent_review.author.pk %}">
+                                    {% if recent_review.author.photo %}
+                                    <img class="media-object" src="{{ recent_review.author.photo.url }}" alt="..." style="width:100px; height:100px;" />
+                                    {% else %}
+                                    <img class="media-object" src="http://placehold.it/100x100" alt="...">
+                                    {% endif %}
+                                  </a>
+                                </div>
+                                <div class="media-body">
+                                  <h4 class="media-heading"><a href="{% url 'user_detail' pk=recent_review.author.pk %}">{{ recent_review.author.username }}</a><span>님의 </span><a href="{% url 'store_detail' pk=recent_review.store.pk %}">{{ recent_review.store.name }}</a> 방문후기</h4>
+                                  <span>평점: {{ recent_review.user_rating }} / </span><span>작성일: {{ recent_review.created_at }}</span>
+                                  <p>{{ recent_review.content|truncatechars_html:600|linebreaks }}</p>
+                                </div>
+                              </li>
+                              <hr />
+                              {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-12 text-center">
+                        <p>...</p><p>...</p>
+                        <button class="btn btn-danger" id="more_reivew" onclick="">See more 최신리뷰!</button>
+                    </div>
+                    <!-- ajax 구현 요망 -->
+                </div>
+
+                <div class="col-md-4">
+                    <div>
+                        <h3>이달의 할인행사</h3>
+                        <ul class="media-list">
+                          <li class="media">
+                            <div class="media-left">
+                              <a href="#">
+                                <img class="media-object" src="http://placehold.it/64x64" alt="...">
+                              </a>
+                            </div>
+                            <div class="media-body">
+                              <h4 class="media-heading">Media heading</h4>
+                              ...
+                            </div>
+                          </li>
+                          <li class="media">
+                            <div class="media-left">
+                              <a href="#">
+                                <img class="media-object" src="http://placehold.it/64x64" alt="...">
+                              </a>
+                            </div>
+                            <div class="media-body">
+                              <h4 class="media-heading">Media heading</h4>
+                              ...
+                            </div>
+                          </li>
+                          <li class="media">
+                            <div class="media-left">
+                              <a href="#">
+                                <img class="media-object" src="http://placehold.it/64x64" alt="...">
+                              </a>
+                            </div>
+                            <div class="media-body">
+                              <h4 class="media-heading">Media heading</h4>
+                              ...
+                            </div>
+                          </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3>이달의 인기리뷰</h3>
+                        <ul class="media-list">
+                          <li class="media">
+                            <div class="media-left">
+                              <a href="#">
+                                <img class="media-object" src="http://placehold.it/64x64" alt="...">
+                              </a>
+                            </div>
+                            <div class="media-body">
+                              <h4 class="media-heading">Media heading</h4>
+                              ...
+                            </div>
+                          </li>
+                          <li class="media">
+                            <div class="media-left">
+                              <a href="#">
+                                <img class="media-object" src="http://placehold.it/64x64" alt="...">
+                              </a>
+                            </div>
+                            <div class="media-body">
+                              <h4 class="media-heading">Media heading</h4>
+                              ...
+                            </div>
+                          </li>
+                          <li class="media">
+                            <div class="media-left">
+                              <a href="#">
+                                <img class="media-object" src="http://placehold.it/64x64" alt="...">
+                              </a>
+                            </div>
+                            <div class="media-body">
+                              <h4 class="media-heading">Media heading</h4>
+                              ...
+                            </div>
+                          </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3>서울 주변</h3>
+                        <div class="col-sm-6">
+                            <ul>
+                                <li>인천</li>
+                                <li>수원</li>
+                                <li>레이크뷰</li>
+                                <li>일산</li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-6">
+                            <ul>
+                                <li>유타</li>
+                                <li>마루나</li>
+                                <li>호티</li>
+                                <li>의정부</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+{% endblock %}
+
+
+</body>
+</html>

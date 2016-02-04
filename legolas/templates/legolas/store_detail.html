@@ -1,0 +1,129 @@
+{% extends 'legolas/base.html' %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+
+
+{% block head %}
+    <meta name="description" content="korean yelp equivalant, elf" />
+    <meta name="keywords" content="맛집" />
+    <title>elf store page</title>
+    <link rel="stylesheet" href="{% static 'css/store_detail.css' %}" />
+{% endblock %}
+
+
+{% block search %}
+  {% include 'legolas/search_form.html' %}
+{% endblock search %}
+
+
+
+
+{% block main %}
+
+    <div id="store_content" style="margin-top:30px">
+        <div class="container">
+            <div>
+                {% if store.photo %}
+                <img style="float:left; margin: 0px 20px 20px 0; max-width:300px; max-height:250px" src="{{ store.photo.url }}" />
+                {% else %}
+                <img style="float:left; margin: 0px 20px 20px 0;" src="http://placehold.it/300x250" />
+                {% endif %}
+                <div style="float:right">
+                <a href="{% url 'store_edit' pk=store.pk %}" target="_blank">
+                <button type="button" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-pencil"></span>업체정보 수정하기</button></a>
+                </div>
+                <h3>{{ store.name }}</h3>
+                <p>주소: {{ store.address }}</p>
+                <p>리뷰평균: {{ store.store_rating|floatformat }}점</p>
+                <p>소개: {{ store.intro }}</p>
+            </div>
+            <div id="review_for_a_store" class="rows" style="clear:both;">
+                <hr />
+                <div class="col-md-8">
+                    <div class="col-md-12" style="background-color:#fefff1">
+                    <h2 style="display:inline-block">리뷰 쓰기</h2>
+
+                    <!-- &nbsp;<h4 style="display:inline-block"><a href="{% url 'review_new' store_id=store.id %}"><span class="glyphicon glyphicon-edit"></span><span>리뷰쓰기</span></a></h4> -->
+
+                    <br />
+
+                    <div>
+                        <form action="{% url 'review_new' store_id=store.id %}" method="post">
+                                {% csrf_token %}
+                            {% bootstrap_form review_form %}
+                            {% buttons %}
+                                <button class="btn btn-primary">
+                                {% bootstrap_icon "star" %} Submit
+                                </button>
+                            {% endbuttons %}
+                        </form>
+                    </div>
+                    </div>
+
+                    <br />
+
+                    <h2 style="display:inline-block">다른사람들의 리뷰</h2>
+
+                    {% for review in reviews %}
+
+                    <h4><a href="{% url 'user_detail' pk=review.author.id %}"> {{ review.author }} </a> <span>의 평가: {{ review.user_rating }}점 <a href="{% url 'review_edit' store_id=store.id review_id=review.id %}"></span><span class="glyphicon glyphicon-wrench"></span></a></h4>
+                    <p><i> {{ review.created_at }}</i></p>
+                    <pre>{{ review.content }}</pre>
+                    {% if review.photo %}
+                    <img style="max-height:200px;" src="/media/{{ review.photo.url }}" />
+                    {% endif %}
+
+                    <div>
+                        <p><span class="glyphicon glyphicon-comment"></span> <span>Comments</span></p>
+                        {% for comment in review.comment_set.all %}
+                        <div class="media">
+                          <div class="media-left">
+                            <a href="{% url 'user_detail' pk=comment.author.pk %}">
+                              <img class="media-object" src="{% if comment.author.photo %}{{ comment.author.photo.url }}{% else %}http://placehold.it/40x40{% endif %}" alt="{{ comment.author }}">
+                            </a>
+                          </div>
+                          <div class="media-body">
+                            {{ comment.author }}
+                            {{ comment.content|linebreaks }}
+                          </div>
+                        </div>
+                        {% endfor %}
+
+
+
+                        <form action="{% url 'comment_new' store_id=store.id review_id=review.id %}" method="post"> {% csrf_token %}
+                            {% bootstrap_form comment_form %}
+                            {% buttons %}
+                                <button class="btn btn-primary">
+                                {% bootstrap_icon "star" %} Submit
+                                </button>
+                            {% endbuttons %}
+                        </form>
+                    </div>
+                    <hr />
+                    {% endfor %}
+                </div>
+
+                <div class="col-md-4">
+                    <h4>가게 운영시간</h4>
+                    <p>{{ store.hours }}</p> <br />
+                    <h4>휴일</h4>
+                    <p>{{ store.holiday }}</p> <br />
+                    <h4>가격대</h4>
+                    <p>{{ store.menu|linebreaks }}</p>
+                    <p><a href="{% url 'store_menu' pk=store.pk %}" target="_blank">메뉴판 전체보기<span class="glyphicon glyphicon-new-window"></span></a></p><br />
+                    <h4>추가정보</h4>
+                    <p>주차: {{ store.parking }} </p><br />
+                    {% if reviews.last.author %}
+                    <h4>최초 리뷰어</h4>
+                    <p>{{ reviews.last.author.photo }}</p>
+                    <p><a href="{% url 'user_detail' pk=reviews.last.author.id %}">{{ reviews.last.author }}</a></p>
+                    <p>{{ reviews.last.content|slice:":50" }}</p>
+                    {% endif %}
+                     <br />
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

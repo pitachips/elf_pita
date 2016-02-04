@@ -1,0 +1,11 @@
+
+
+<form id="nav_search" class="navbar-form" method="GET" action="/store_list/" role="search" style="padding-top:20px">
+    <div class="form-group">
+      <input type="text" name="where" class="form-control" placeholder="지역명/지하철역명" value="{{ request.GET.where }}" />
+    </div>
+    <div class="form-group">
+      <input type="text" name="what" class="form-control" placeholder="맛집/술집/바/노래방/미용실" value="{{ request.GET.what }}" />
+    </div>
+    <input href="{% url 'store_list' %}?where={{ query_where }}&what={{ query_what }}" type="submit" class="btn btn-default" value="검색" />
+</form>

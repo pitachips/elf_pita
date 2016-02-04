@@ -1,0 +1,29 @@
+{% extends 'legolas/base.html' %}
+{% load staticfiles %}
+
+
+{% block head %}
+    <meta name="description" content="korean yelp equivalant, elf" />
+    <meta name="keywords" content="맛집" />
+    <title>elf store menu page</title>
+    <link rel="stylesheet" href="{% static 'css/store_menu.css' %}" />
+{% endblock %}
+
+
+{% block search %}
+  {% include 'legolas/search_form.html' %}
+{% endblock search %}
+
+
+
+{% block main %}
+
+    <div id="store_menu">
+        <div class="container">
+            <div>
+                <h2>여기는 업체명 "{{ store.name }}" 의 메뉴 페이지입니다.</h2>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

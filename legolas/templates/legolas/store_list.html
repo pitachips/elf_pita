@@ -1,0 +1,100 @@
+{% extends 'legolas/base.html' %}
+{% load staticfiles %}
+
+
+{% block head %}
+    <meta name="description" content="korean yelp equivalant, elf" />
+    <meta name="keywords" content="맛집" />
+    <title>elf storelist</title>
+    <link rel="stylesheet" href="{% static 'css/store_list.css' %}" />
+    <style>
+        #filter .btn-group {
+            margin-top:10px; margin-bottom: 10px;
+        }
+
+    </style>
+{% endblock %}
+
+
+{% block search %}
+  {% include 'legolas/search_form.html' %}
+{% endblock search %}
+
+
+
+{% block main %}
+
+    <div id="filter">
+        <div class="container">
+            <div class="rows">
+                <div class="col-sm-7">
+                    <h3>'{% if request.GET.where %}{{ request.GET.where }}{% endif %} {% if request.GET.what %}{{ request.GET.what }}{% endif %}' 검색결과</h3>
+                    <hr />
+                    {% for store in stores %}
+                        <div style="clear:both;">
+                            <a href="{% url 'store_detail' pk=store.pk %}">
+                                {% if store.photo %}
+                                <img style="vertical-align:top; float:left; margin-right: 10px; width:100px; height:100px; " src="{{ store.photo.url }}" />
+                                {% else %}
+                                <img style="vertical-align:top; float:left; margin-right: 10px;" src="http://placehold.it/100x100" />
+                                {% endif %}
+                                <p style="font: 20px bold;">{{ store.name }}</p>
+                            </a>
+                            <p>평점: {{ store.store_rating|floatformat }}</p>
+                            <p>
+                            {% for sub_cate in store.sub_categories.all %}
+                            <span>{{ sub_cate }} </span>
+                            {% endfor %}
+                            </p>
+                        </div>
+                        <div style="clear:both"></div>
+                        <hr />
+                    {% endfor %}
+
+                    <div class="pagination">
+                        <span class="step-links">
+                            {% if stores.has_previous %}
+                                <a href="?page={{ stores.previous_page_number }}&where={{ request.GET.where }}&what={{ request.GET.what }}">previous</a>
+                            {% endif %}
+                            <span class="current">
+                                Page {{ stores.number }} of {{ stores.paginator.num_pages }}.
+                            </span>
+                            {% if stores.has_next %}
+                                <a href="?page={{ stores.next_page_number }}&where={{ request.GET.where }}&what={{ request.GET.what }}">next</a>
+                            {% endif %}
+                        </span>
+                    </div>
+                </div>
+            <div class="col-sm-5">
+                <div class="필터링">
+                    <h4>정렬기준</h4>
+                        <div class="btn-group" role="group" aria-label="...">
+                          <button type="button" class="btn btn-default">평점</button>
+                          <button type="button" class="btn btn-default">리뷰 수</button>
+                        </div>
+                    <h4>골라보기</h4>
+                    <div class="btn-group" role="group" aria-label="...">
+                          <button type="button" class="btn btn-default">$</button>
+                          <button type="button" class="btn btn-default">$$</button>
+                          <button type="button" class="btn btn-default">$$$</button>
+                          <button type="button" class="btn btn-default">$$$$</button>
+                    </div>
+                    <div class="btn-group" role="group" aria-label="...">
+                          <button type="button" class="btn btn-default">이 시각 영업중</button>
+                    </div>
+                    <div class="btn-group" role="group" aria-label="...">
+                        <button type="button" class="btn btn-default">배달 가능</button>
+                    </div>
+                </div>
+                <div class="지도">
+                    <h4>지도</h4>
+                    <img src="http://mike.teczno.com/img/google-maps-track.png" style="width:100%;" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+{% endblock %}

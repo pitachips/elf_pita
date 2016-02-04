@@ -1,0 +1,10 @@
+*.egg-info
+*.pot
+*.py[co]
+__pycache__
+
+docs/
+media/
+
+legolas/fixtures/
+*/migrations/
