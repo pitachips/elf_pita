@@ -33,7 +33,7 @@ def signup1(request):
 
 def signup2(request):
     if request.method == 'POST':
-        form = SignupForm2(request.POST)
+        form = SignupForm2(request.POST, request.FILES)
         if form.is_valid():
             new_user_profile = form.save(commit=False)
             new_user_profile.user = request.user

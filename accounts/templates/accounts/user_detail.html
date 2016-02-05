@@ -56,12 +56,13 @@
                     {% for review in users_reviews %}
                     <div style="background-color:#fefff1">
 
-                    {% if review.store.photo %}
-                    <a href="{% url 'store_detail' pk=review.store.pk %}"><img src="{{ review.store.photo.url }}" /></a>
-                    {% endif %}
-
-                    <p><a href="{% url 'store_detail' pk=review.store.pk %}">{{ review.store.name }}</a></p>
-                    <span>{{ review.user_rating }}</span><span><i>{{ review.created_at }}</i></span>
+                    <p>
+                        {% if review.store.photo %}
+                        <a href="{% url 'store_detail' pk=review.store.pk %}"><img src="{{ review.store.photo.url }}" / style="width:40px; height:40px;"></a>
+                        {% endif %}
+                        <span><a href="{% url 'store_detail' pk=review.store.pk %}">{{ review.store.name }}</a></span>
+                    </p>
+                    <p><span>{{ review.user_rating }}</span><span><i>{{ review.created_at }}</i></span></p>
                     <p>{{ review.content|linebreaks }}</p>
 
                     {% if review.photo %}

@@ -69,8 +69,8 @@
                 <div class="필터링">
                     <h4>정렬기준</h4>
                         <div class="btn-group" role="group" aria-label="...">
-                          <button type="button" class="btn btn-default">평점</button>
-                          <button type="button" class="btn btn-default">리뷰 수</button>
+                          <a href="?where={{ request.GET.where }}&what={{ request.GET.what }}&sortby={{ query_sort }}" type="button" class="btn btn-default">평점</a>
+                          <a href="?where={{ request.GET.where }}&what={{ request.GET.what }}&sortby={{ query_sort }}" type="button" class="btn btn-default">리뷰 개수</a>
                         </div>
                     <h4>골라보기</h4>
                     <div class="btn-group" role="group" aria-label="...">

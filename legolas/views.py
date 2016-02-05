@@ -104,6 +104,7 @@ def store_list(request):
 
     context = {
         'stores':stores,
+        'query_sort': query_sort,
     }
 
     return render(request, 'legolas/store_list.html', context)

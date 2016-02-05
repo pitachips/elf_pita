@@ -7,8 +7,6 @@ from elf.utils import random_name_upload_to, thumbnail
 from legolas.models import Area, SubArea
 
 
-
-
 class UserProfile(models.Model):
     '''
     User의 확장.
