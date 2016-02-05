@@ -1,0 +1,49 @@
+[
+    {"model": "legolas.Category", "pk": 1, "fields": {"name": "맛집"}},
+    {"model": "legolas.Category", "pk": 2, "fields": {"name": "술집"}},
+    {"model": "legolas.Category", "pk": 3, "fields": {"name": "쇼핑"}},
+    {"model": "legolas.Category", "pk": 4, "fields": {"name": "엔터테인먼트"}},
+    {"model": "legolas.Category", "pk": 5, "fields": {"name": "문화생활"}},
+    {"model": "legolas.Category", "pk": 6, "fields": {"name": "뷰티&네일"}},
+
+    {"model": "legolas.SubCategory", "pk": 1, "fields": {"parent_id": 1, "name": "한식"}},
+    {"model": "legolas.SubCategory", "pk": 2, "fields": {"parent_id": 1, "name": "일식"}},
+    {"model": "legolas.SubCategory", "pk": 3, "fields": {"parent_id": 1, "name": "중식"}},
+    {"model": "legolas.SubCategory", "pk": 4, "fields": {"parent_id": 1, "name": "분식"}},
+    {"model": "legolas.SubCategory", "pk": 5, "fields": {"parent_id": 1, "name": "치킨/피자"}},
+    {"model": "legolas.SubCategory", "pk": 6, "fields": {"parent_id": 1, "name": "디저트"}},
+    {"model": "legolas.SubCategory", "pk": 7, "fields": {"parent_id": 1, "name": "기타"}},
+    {"model": "legolas.SubCategory", "pk": 8, "fields": {"parent_id": 1, "name": "양식"}},
+
+    {"model": "legolas.SubCategory", "pk": 9, "fields": {"parent_id": 2, "name": "소주"}},
+    {"model": "legolas.SubCategory", "pk": 10, "fields": {"parent_id": 2, "name": "맥주"}},
+    {"model": "legolas.SubCategory", "pk": 11, "fields": {"parent_id": 2, "name": "막걸리"}},
+    {"model": "legolas.SubCategory", "pk": 12, "fields": {"parent_id": 2, "name": "와인"}},
+    {"model": "legolas.SubCategory", "pk": 13, "fields": {"parent_id": 2, "name": "칵테일"}},
+    {"model": "legolas.SubCategory", "pk": 14, "fields": {"parent_id": 2, "name": "막걸리"}},
+    {"model": "legolas.SubCategory", "pk": 15, "fields": {"parent_id": 2, "name": "양주"}},
+    {"model": "legolas.SubCategory", "pk": 16, "fields": {"parent_id": 2, "name": "사케/이자카야"}},
+
+    {"model": "legolas.SubCategory", "pk": 17, "fields": {"parent_id": 3, "name": "백화점"}},
+    {"model": "legolas.SubCategory", "pk": 18, "fields": {"parent_id": 3, "name": "할인마트"}},
+    {"model": "legolas.SubCategory", "pk": 19, "fields": {"parent_id": 3, "name": "슈퍼마켓"}},
+    {"model": "legolas.SubCategory", "pk": 20, "fields": {"parent_id": 3, "name": "펴의점"}},
+    {"model": "legolas.SubCategory", "pk": 21, "fields": {"parent_id": 3, "name": "옷가게"}},
+
+    {"model": "legolas.SubCategory", "pk": 22, "fields": {"parent_id": 4, "name": "PC방"}},
+    {"model": "legolas.SubCategory", "pk": 23, "fields": {"parent_id": 4, "name": "당구장"}},
+    {"model": "legolas.SubCategory", "pk": 24, "fields": {"parent_id": 4, "name": "오락실"}},
+    {"model": "legolas.SubCategory", "pk": 25, "fields": {"parent_id": 4, "name": "멀티방"}},
+    {"model": "legolas.SubCategory", "pk": 26, "fields": {"parent_id": 4, "name": "영화관"}},
+    {"model": "legolas.SubCategory", "pk": 27, "fields": {"parent_id": 4, "name": "클럽"}},
+    {"model": "legolas.SubCategory", "pk": 28, "fields": {"parent_id": 4, "name": "노래방"}},
+
+    {"model": "legolas.SubCategory", "pk": 29, "fields": {"parent_id": 5, "name": "박물관"}},
+    {"model": "legolas.SubCategory", "pk": 30, "fields": {"parent_id": 5, "name": "영화관"}},
+    {"model": "legolas.SubCategory", "pk": 31, "fields": {"parent_id": 5, "name": "극장"}},
+    {"model": "legolas.SubCategory", "pk": 32, "fields": {"parent_id": 5, "name": "미술관"}},
+    {"model": "legolas.SubCategory", "pk": 33, "fields": {"parent_id": 5, "name": "축제/행사"}},
+
+    {"model": "legolas.SubCategory", "pk": 34, "fields": {"parent_id": 6, "name": "미용실"}},
+    {"model": "legolas.SubCategory", "pk": 35, "fields": {"parent_id": 6, "name": "로드샵"}}
+]
