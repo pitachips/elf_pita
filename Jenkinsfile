@@ -4,10 +4,10 @@ node {
         echo "hello pipeline"
         echo "hello..."
     
-        echo "commit hash: ${env.GIT_COMMIT}")
+        // echo "commit hash: ${env.GIT_COMMIT}")
 
-        $GIT_BRANCH = sh(returnStdout: true, script: 'git rev-parse --abbrev-ref HEAD').trim()
-        echo "branch name: $GIT_BRANCH"
+        // $GIT_BRANCH = sh(returnStdout: true, script: 'git rev-parse --abbrev-ref HEAD').trim()
+       // echo "branch name: $GIT_BRANCH"
         
     }   
     stage('Test') {
