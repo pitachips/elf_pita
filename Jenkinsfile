@@ -4,7 +4,7 @@ node {
         echo "hello pipeline"
         echo "hello..."
     
-        echo "git commit hash: $GIT_COMMIT"
+        echo "git commit hash: ${env.GIT_COMMIT}"
 
         $GIT_BRANCH = sh(returnStdout: true, script: 'git rev-parse --abbrev-ref HEAD').trim()
         echo "branch name: $GIT_BRANCH"
